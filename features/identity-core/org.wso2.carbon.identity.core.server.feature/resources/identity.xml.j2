@@ -799,9 +799,6 @@
         {% if oauth.scope_validator.jdbc.enable %}
             <ScopeValidator class="{{oauth.scope_validator.jdbc.class}}" />
         {% endif %}
-        {% if oauth.scope_validator.xacml.enable %}
-            <ScopeValidator class="{{oauth.scope_validator.xacml.class}}"/>
-        {% endif %}
         {% for scope_validator in oauth.custom_scope_validator %}
             <ScopeValidator class="{{scope_validator.class}}" />
         {% endfor %}
@@ -1256,6 +1253,15 @@
                 <Scope>{{scope}}</Scope>
             {% endfor %}
         </AllowedScopes>
+        {% endif %}
+
+        % if oauth.default_requested_scopes is defined %}
+        <!-- Configuration to pass a list of default requested scopes. -->
+        <DefaultRequestedScopes>
+            {%for scope in oauth.default_requested_scopes%}
+            <Scope>{{scope}}</Scope>
+            {% endfor %}
+        </DefaultRequestedScopes>
         {% endif %}
 
         {% if oauth.drop_unregistered_scopes is defined %}
